@@ -10,7 +10,7 @@ static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
     .Ki = 0,
     .Kd = 0,
     .MaxOutput = 2000,
-    .Deadband = 10,
+    .Deadband = 30,
     .IntegralLimit = 500,
 };
 static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
@@ -18,7 +18,7 @@ static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
     .Ki = 0.3,
     .Kd = 0,
     .MaxOutput = 15000,
-    .Deadband = 10,
+    .Deadband = 30,
     .IntegralLimit = 1500,
 };
 
@@ -41,8 +41,9 @@ Xeno::Lift::Lift()
     driver_ = std::make_unique<CanDriver>("can1");
     m3508_1 = std::make_unique<M3508<3, Position>>(*driver_, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
     m3508_2 = std::make_unique<M3508<4, Position>>(*driver_, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
-    m3508_1->enable();
-    m3508_2->enable();
+    auto result = m3508_1->enable();
+    result = m3508_2->enable();
+    if (!result) throw std::runtime_error(result.error());
 }
 
 Xeno::Lift::~Lift() = default;
