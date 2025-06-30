@@ -6,20 +6,20 @@ using enum OneMotor::Motor::DJI::MotorMode;
 using OneMotor::Control::PID_Params;
 
 static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
-    .Kp = 6,
+    .Kp = 5,
     .Ki = 0,
     .Kd = 0,
-    .MaxOutput = 2000,
+    .MaxOutput = 3000,
     .Deadband = 30,
     .IntegralLimit = 500,
 };
 static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
     .Kp = 5,
-    .Ki = 0.3,
+    .Ki = 0.1,
     .Kd = 0,
-    .MaxOutput = 15000,
+    .MaxOutput = 20000,
     .Deadband = 30,
-    .IntegralLimit = 1500,
+    .IntegralLimit = 2000,
 };
 
 Xeno::Lift& Xeno::Lift::getInstance()
@@ -30,15 +30,19 @@ Xeno::Lift& Xeno::Lift::getInstance()
 
 void Xeno::Lift::posAngControl(const float pos, const float ang) const noexcept
 {
-    m3508_1->setPosRef(-pos);
-    m3508_1->setAngRef(-ang);
-    m3508_2->setPosRef(pos);
-    m3508_2->setAngRef(ang);
+    m3508_1->setPosRef(pos);
+    m3508_1->setAngRef(ang);
+    m3508_2->setPosRef(-pos);
+    m3508_2->setAngRef(-ang);
 }
 
 Xeno::Lift::Lift()
 {
-    driver_ = std::make_unique<CanDriver>("can1");
+    driver_ = std::make_unique<CanDriver>("can0");
+    if (const auto result = driver_->open(); !result)
+    {
+        throw std::runtime_error(result.error());
+    }
     m3508_1 = std::make_unique<M3508<3, Position>>(*driver_, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
     m3508_2 = std::make_unique<M3508<4, Position>>(*driver_, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
     auto result = m3508_1->enable();

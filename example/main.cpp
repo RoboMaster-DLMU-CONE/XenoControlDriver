@@ -65,7 +65,7 @@ int main()
         std::cout << "  r1: " << r1 << "\n";
         std::cout << "  r2: " << r2 << "\n";
         std::cout << "  r3: " << r3 << "\n";
-        Xeno::Lift::getInstance().posAngControl(lift, 50);
+        Xeno::Lift::getInstance().posAngControl(lift, 100);
         // ShiftSuck::getInstance().posVelControl(packet.shift, 780, packet.suck_rotate, 780);
         // Arm::getInstance().posControl(packet.r1, packet.r2, packet.r3);
     }
