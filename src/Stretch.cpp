@@ -15,9 +15,9 @@ static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
     .IntegralLimit = 500,
 };
 static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
-    .Kp = 20,
-    .Ki = 2.5,
-    .Kd = 1.0,
+    .Kp = 16,
+    .Ki = 2.0,
+    .Kd = 0.8,
     .MaxOutput = 20000,
     .Deadband = 30,
     .IntegralLimit = 5000,
