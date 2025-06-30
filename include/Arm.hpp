@@ -1,5 +1,6 @@
 #ifndef ARM_HPP
 #define ARM_HPP
+#include <expected>
 #include <memory>
 #include <OneMotor/Motor/DM/J4310.hpp>
 

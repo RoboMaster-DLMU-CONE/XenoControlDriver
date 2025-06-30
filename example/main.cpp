@@ -1,4 +1,6 @@
 #include <iostream>
+#include <limits>
+
 #include "Arm.hpp"
 #include "Lift.hpp"
 

@@ -16,7 +16,6 @@ namespace Xeno
 
     private:
         Lift();
-        std::unique_ptr<OneMotor::Can::CanDriver> driver_;
         std::unique_ptr<OneMotor::Motor::DJI::M3508<3, OneMotor::Motor::DJI::MotorMode::Position>> m3508_1;
         std::unique_ptr<OneMotor::Motor::DJI::M3508<4, OneMotor::Motor::DJI::MotorMode::Position>> m3508_2;
     };

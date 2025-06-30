@@ -1,5 +1,4 @@
-#include "Lift.hpp"
-
+#include "Stretch.hpp"
 #include "CanDriverManager.hpp"
 
 using OneMotor::Can::CanDriver;
@@ -24,13 +23,13 @@ static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
     .IntegralLimit = 5000,
 };
 
-Xeno::Lift& Xeno::Lift::getInstance()
+Xeno::Stretch& Xeno::Stretch::getInstance()
 {
-    static Lift _instance;
+    static Stretch _instance;
     return _instance;
 }
 
-void Xeno::Lift::posAngControl(const float pos, const float ang) const noexcept
+void Xeno::Stretch::posAngControl(const float pos, const float ang) const
 {
     m3508_1->setPosRef(pos);
     m3508_1->setAngRef(ang);
@@ -38,14 +37,12 @@ void Xeno::Lift::posAngControl(const float pos, const float ang) const noexcept
     m3508_2->setAngRef(-ang);
 }
 
-Xeno::Lift::Lift()
+Xeno::Stretch::Stretch()
 {
     auto& driver = CanDriverManager::getInstance().getBaseDriver();
-    m3508_1 = std::make_unique<M3508<3, Position>>(driver, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
-    m3508_2 = std::make_unique<M3508<4, Position>>(driver, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
+    m3508_1 = std::make_unique<M3508<1, Position>>(driver, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
+    m3508_2 = std::make_unique<M3508<2, Position>>(driver, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
     auto result = m3508_1->enable();
     result = m3508_2->enable();
     if (!result) throw std::runtime_error(result.error());
 }
-
-Xeno::Lift::~Lift() = default;
