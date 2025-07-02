@@ -1,4 +1,5 @@
 #include <Arm.hpp>
+#include <filesystem>
 #include <Lift.hpp>
 #include <Suck.hpp>
 #include <Shift.hpp>
@@ -7,26 +8,56 @@
 
 #include <format>
 #include <thread>
+#include <iostream>
+#include <regex>
 
 #include "deserialize.h"
 
-#define SERIAL_PORT "/dev/ttyACM0"
-#define SERIAL_PORT_2 "/dev/ttyACM1"
 #define BAUD_RATE 115200
 
 XenoSlavePacket packet{};
+
+std::string findLatestTtyACM()
+{
+    std::vector<int> acmNumbers;
+    const std::regex acmRegex(R"(ttyACM(\d+))");
+    for (const auto& entry : std::filesystem::directory_iterator("/dev"))
+    {
+        std::string filename = entry.path().filename().string();
+        if (std::smatch match; std::regex_match(filename, match, acmRegex))
+        {
+            acmNumbers.push_back(std::stoi(match[1].str()));
+        }
+    }
+
+    if (acmNumbers.empty())
+    {
+        return "";
+    }
+
+    const int maxACM = *std::max_element(acmNumbers.begin(), acmNumbers.end());
+    return "/dev/ttyACM" + std::to_string(maxACM);
+}
+
+void clearScreen()
+{
+    std::cout << "\033[2J\033[H" << std::flush;
+}
 
 int main()
 {
     init_xeno_slave_packet(&packet);
     serialib serial;
-    if (serial.openDevice(SERIAL_PORT, BAUD_RATE) != 1)
+
+    const std::string latestPort = findLatestTtyACM();
+    if (latestPort.empty())
     {
-        if (serial.openDevice(SERIAL_PORT_2, BAUD_RATE) != 1)
-        {
-            std::cerr << "Error opening serial port" << std::endl;
-            return 1;
-        }
+        std::cerr << "No ttyACM ports found" << std::endl;
+        return 1;
+    }
+    if (serial.openDevice(latestPort.c_str(), BAUD_RATE) != 1)
+    {
+        std::cerr << "Error opening serial port" << std::endl;
     }
 
     constexpr size_t PACKET_SIZE = 33;
@@ -38,6 +69,7 @@ int main()
 
         if (const int bytesRead = serial.readBytes(dataPacket.data(), PACKET_SIZE, 30); bytesRead > 0)
         {
+            clearScreen();
             std::cout << "Received " << bytesRead << " bytes" << std::endl;
             deserialize(dataPacket.data(), &packet);
             float lift = packet.lift;
@@ -48,7 +80,7 @@ int main()
             float r2 = packet.r2;
             float r3 = packet.r3;
 
-            std::cout << std::format("lift: {} \n stretch: {}, shift: {} \n suck_rotate: {} \n r1 {} r2 {} r3 {}",
+            std::cout << std::format("lift: {} \n stretch: {}, shift: {} \n suck_rotate: {} \n r1 {} r2 {} r3 {}\n",
                                      lift, stretch, shift,
                                      suck_rotate, r1, r2, r3);
         }
