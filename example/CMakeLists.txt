@@ -1,0 +1,2 @@
+add_subdirectory(manually)
+add_subdirectory(serial)

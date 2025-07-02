@@ -1,0 +1,2 @@
+add_executable(XenoControlExample_Manually main.cpp)
+target_link_libraries(XenoControlExample_Manually PRIVATE ${PROJECT_NAME})

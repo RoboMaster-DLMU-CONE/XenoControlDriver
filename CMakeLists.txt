@@ -25,5 +25,4 @@ target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_link_libraries(${PROJECT_NAME} PRIVATE OneMotor::OneMotor)
 
-add_executable(XenoControlExample example/main.cpp)
-target_link_libraries(XenoControlExample PUBLIC ${PROJECT_NAME})
+add_subdirectory(example)
