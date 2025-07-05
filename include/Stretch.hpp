@@ -12,6 +12,7 @@ namespace Xeno
         Stretch(Stretch&) = delete;
         Stretch& operator=(const Stretch&) = delete;
         void posAngControl(float pos, float ang) const;
+
     private:
         Stretch();
         std::unique_ptr<OneMotor::Motor::DJI::M3508<1, OneMotor::Motor::DJI::MotorMode::Position>> m3508_1;

@@ -1,5 +1,8 @@
 #include "Lift.hpp"
 
+#include <csignal>
+#include <mutex>
+
 #include "CanDriverManager.hpp"
 
 using OneMotor::Can::CanDriver;
@@ -7,20 +10,22 @@ using OneMotor::Motor::DJI::M3508;
 using enum OneMotor::Motor::DJI::MotorMode;
 using OneMotor::Control::PID_Params;
 
+using std::chrono_literals::operator ""ms;
+
 static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
     .Kp = 5,
-    .Ki = 0,
+    .Ki = 0.2,
     .Kd = 0,
     .MaxOutput = 3000,
-    .Deadband = 30,
+    .Deadband = 100,
     .IntegralLimit = 500,
 };
 static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
     .Kp = 12,
-    .Ki = 1.0,
-    .Kd = 0.8,
+    .Ki = 2.0,
+    .Kd = 0.1,
     .MaxOutput = 20000,
-    .Deadband = 100,
+    .Deadband = 300,
     .IntegralLimit = 3000,
 };
 
@@ -48,4 +53,3 @@ Xeno::Lift::Lift()
     if (!result) throw std::runtime_error(result.error());
 }
 
-Xeno::Lift::~Lift() = default;

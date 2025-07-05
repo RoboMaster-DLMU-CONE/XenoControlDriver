@@ -1,10 +1,15 @@
 #include "Stretch.hpp"
+
+#include <csignal>
+#include <mutex>
+
 #include "CanDriverManager.hpp"
 
 using OneMotor::Can::CanDriver;
 using OneMotor::Motor::DJI::M3508;
 using enum OneMotor::Motor::DJI::MotorMode;
 using OneMotor::Control::PID_Params;
+using std::chrono_literals::operator ""ms;
 
 static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
     .Kp = 5,
@@ -15,11 +20,11 @@ static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
     .IntegralLimit = 500,
 };
 static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
-    .Kp = 16,
-    .Ki = 2.0,
-    .Kd = 0.8,
+    .Kp = 8,
+    .Ki = 0.7,
+    .Kd = 0.1,
     .MaxOutput = 20000,
-    .Deadband = 30,
+    .Deadband = 100,
     .IntegralLimit = 5000,
 };
 

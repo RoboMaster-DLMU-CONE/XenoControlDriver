@@ -12,6 +12,8 @@ namespace Xeno
         void posAngControl(float pos, float ang) const;
         Shift(Shift&) = delete;
         Shift& operator=(const Shift&) = delete;
+        ~Shift() = default;
+
     private:
         Shift();
         std::unique_ptr<OneMotor::Motor::DJI::M3508<1, OneMotor::Motor::DJI::MotorMode::Position>> m3508_;

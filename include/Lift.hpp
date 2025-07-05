@@ -12,7 +12,6 @@ namespace Xeno
         void posAngControl(float pos, float ang) const noexcept;
         Lift(Lift&) = delete;
         Lift& operator=(const Lift&) = delete;
-        ~Lift();
 
     private:
         Lift();

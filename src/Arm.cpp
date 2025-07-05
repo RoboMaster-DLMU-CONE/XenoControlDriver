@@ -12,7 +12,7 @@ Xeno::Arm& Xeno::Arm::getInstance()
 
 Result Xeno::Arm::posVelControl(const uint8_t id, const float position, const float velocity) const
 {
-    return j4310_array_[id]->posVelControl(position, velocity);
+    return j4310_array_[id - 1]->posVelControl(position, velocity);
 }
 
 Xeno::Arm::Arm()
