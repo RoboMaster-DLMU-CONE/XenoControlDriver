@@ -12,20 +12,22 @@ using OneMotor::Control::PID_Params;
 using std::chrono_literals::operator ""ms;
 
 static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
-    .Kp = 5,
-    .Ki = 0,
+    .Kp = 1.8,
+    .Ki = 0.005,
     .Kd = 0,
-    .MaxOutput = 3000,
-    .Deadband = 30,
-    .IntegralLimit = 500,
+    .MaxOutput = 20000,
+    .Deadband = 150,
+    .IntegralLimit = 150,
+    .DerivativeFilterRC = 0.1,
+    .OutputFilterRC = 0.02,
 };
 static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
-    .Kp = 8,
-    .Ki = 0.7,
+    .Kp = 4.5,
+    .Ki = 0.5,
     .Kd = 0.1,
     .MaxOutput = 20000,
-    .Deadband = 100,
-    .IntegralLimit = 5000,
+    .Deadband = 250,
+    .IntegralLimit = 4000,
 };
 
 Xeno::Stretch& Xeno::Stretch::getInstance()

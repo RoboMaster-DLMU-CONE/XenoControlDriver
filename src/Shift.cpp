@@ -8,19 +8,19 @@ using enum OneMotor::Motor::DJI::MotorMode;
 using OneMotor::Control::PID_Params;
 
 static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
-    .Kp = 5,
-    .Ki = 0,
+    .Kp = 2.0,
+    .Ki = 0.005,
     .Kd = 0,
-    .MaxOutput = 3000,
-    .Deadband = 30,
+    .MaxOutput = 10000,
+    .Deadband = 100,
     .IntegralLimit = 500,
 };
 static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
-    .Kp = 8,
+    .Kp = 3,
     .Ki = 0.2,
     .Kd = 0.1,
     .MaxOutput = 10000,
-    .Deadband = 30,
+    .Deadband = 130,
     .IntegralLimit = 1000,
 };
 

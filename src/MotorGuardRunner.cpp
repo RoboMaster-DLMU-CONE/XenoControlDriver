@@ -17,8 +17,8 @@ namespace Xeno
         {
             auto _ = std::make_unique<subprocess::Popen>(
                 std::vector{GUARD_PATH},
-                subprocess::output{subprocess::PIPE},
-                subprocess::error{subprocess::PIPE}
+                subprocess::output{subprocess::STDOUT},
+                subprocess::error{subprocess::STDERR}
             );
         }
         catch (...)

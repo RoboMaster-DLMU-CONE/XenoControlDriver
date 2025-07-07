@@ -73,7 +73,7 @@ int main()
         std::cout << "  r2: " << r2 << "\n";
         std::cout << "  r3: " << r3 << "\n";
         Xeno::Lift::getInstance().posAngControl(lift, 80);
-        // Xeno::Stretch::getInstance().posAngControl(stretch, 80);
+        Xeno::Stretch::getInstance().posAngControl(stretch, 80);
         // auto _ = Xeno::Arm::getInstance().posVelControl(1, r1, 2);
         // _ = Xeno::Arm::getInstance().posVelControl(2, r2, 2);
         // _ = Xeno::Arm::getInstance().posVelControl(3, r3, 2);

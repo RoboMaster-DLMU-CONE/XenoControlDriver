@@ -26,7 +26,7 @@ static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
     .Ki = 0.04,
     .Kd = 0.08,
     .MaxOutput = 18000,
-    .Deadband = 150,
+    .Deadband = 200,
     .IntegralLimit = 1500,
     .DerivativeFilterRC = 0.08,
     .OutputFilterRC = 0.05,
