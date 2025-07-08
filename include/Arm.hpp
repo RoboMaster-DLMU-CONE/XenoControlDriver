@@ -1,6 +1,6 @@
 #ifndef ARM_HPP
 #define ARM_HPP
-#include <expected>
+#include <tl/expected.hpp>
 #include <memory>
 #include <OneMotor/Motor/DM/J4310.hpp>
 
@@ -8,11 +8,10 @@ namespace Xeno
 {
     class Arm
     {
-        using Result = std::expected<void, std::string>;
-
     public:
         static Arm& getInstance();
-        [[nodiscard]] Result posVelControl(uint8_t id, float position, float velocity) const;
+        [[nodiscard]] tl::expected<void, OneMotor::Error> posVelControl(uint8_t id, float position,
+                                                                        float velocity) const;
         Arm(Arm&) = delete;
         Arm& operator=(const Arm&) = delete;
         ~Arm();
