@@ -1,8 +1,8 @@
 #include "MotorGuardRunner.hpp"
 
-#include <subprocess.hpp>
-static const std::string GUARD_PATH = XENO_MOTOR_GUARD_PATH;
-
+#include <stdexcept>
+#include <unistd.h>
+#include <sys/types.h>
 
 namespace Xeno
 {
@@ -13,17 +13,21 @@ namespace Xeno
 
     MotorGuardRunner::MotorGuardRunner()
     {
-        try
+        const pid_t pid = fork();
+        if (pid < 0)
         {
-            auto _ = std::make_unique<subprocess::Popen>(
-                std::vector{GUARD_PATH},
-                subprocess::output{subprocess::STDOUT},
-                subprocess::error{subprocess::STDERR}
-            );
+            throw std::runtime_error("Failed to fork process for Motor Guard.");
         }
-        catch (...)
+        if (pid == 0)
         {
-            throw std::runtime_error("Failed to start Motor Guard.");
+            if (setsid() < 0)
+            {
+                _exit(EXIT_FAILURE);
+            }
+
+            execl(XENO_MOTOR_GUARD_PATH, XENO_MOTOR_GUARD_PATH, nullptr);
+            _exit(EXIT_FAILURE);
         }
     }
 }
+
