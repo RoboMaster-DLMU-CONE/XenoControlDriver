@@ -20,11 +20,11 @@ Xeno::CanDriverManager::CanDriverManager()
 {
     base_driver = std::make_unique<OneMotor::Can::CanDriver>("can0");
     arm_driver = std::make_unique<OneMotor::Can::CanDriver>("can1");
-    base_driver->open().or_else([](const auto& e)
+    (void)base_driver->open().or_else([](const auto& e)
     {
         throw std::runtime_error(e.message);
     });
-    arm_driver->open().or_else([](const auto& e)
+    (void)arm_driver->open().or_else([](const auto& e)
     {
         throw std::runtime_error(e.message);
     });

@@ -3,7 +3,6 @@
 
 #include "Arm.hpp"
 #include "Lift.hpp"
-#include "MotorGuardRunner.hpp"
 #include "Shift.hpp"
 #include "Stretch.hpp"
 
@@ -77,7 +76,6 @@ int main()
         // auto _ = Xeno::Arm::getInstance().posVelControl(1, r1, 2);
         // _ = Xeno::Arm::getInstance().posVelControl(2, r2, 2);
         // _ = Xeno::Arm::getInstance().posVelControl(3, r3, 2);
-        Xeno::MotorGuardRunner::startGuard();
     }
 
     std::cout << "Program terminated.\n";

@@ -41,7 +41,7 @@ Xeno::Shift::Shift()
 {
     auto& driver = CanDriverManager::getInstance().getArmDriver();
     m3508_ = std::make_unique<M3508<1, Position>>(driver, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
-    m3508_->enable().or_else([](const auto& e)
+    (void)m3508_->enable().or_else([](const auto& e)
     {
         throw std::runtime_error(e.message);
     });

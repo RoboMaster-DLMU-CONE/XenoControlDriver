@@ -22,7 +22,7 @@ file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
 add_library(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
-target_link_libraries(${PROJECT_NAME} PRIVATE OneMotor::OneMotor)
+target_link_libraries(${PROJECT_NAME} PUBLIC OneMotor::OneMotor)
 add_dependencies(${PROJECT_NAME} XenoMotorGuard)
 target_compile_definitions(${PROJECT_NAME} PRIVATE
         XENO_MOTOR_GUARD_PATH="$<TARGET_FILE:XenoMotorGuard>"

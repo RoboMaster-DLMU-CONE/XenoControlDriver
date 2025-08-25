@@ -18,14 +18,14 @@ tl::expected<void, OneMotor::Error> Xeno::Arm::posVelControl(const uint8_t id, c
 Xeno::Arm::Arm()
 {
     driver_ = std::make_unique<CanDriver>("can0");
-    driver_->open().or_else([](const auto& e)
+    (void)driver_->open().or_else([](const auto& e)
     {
         throw std::runtime_error(e.message);
     });
     for (int i = 0; i < 3; i++)
     {
         j4310_array_[i] = std::make_unique<J4310>(*driver_, 0x51 + i, 0x41 + i);
-        j4310_array_[i]->enable().and_then([&] { return j4310_array_[i]->setZeroPosition(); });
+        (void)j4310_array_[i]->enable().and_then([&] { return j4310_array_[i]->setZeroPosition(); });
     }
 }
 
