@@ -29,3 +29,4 @@ Xeno::CanDriverManager::CanDriverManager()
         throw std::runtime_error(e.message);
     });
 }
+

@@ -8,20 +8,22 @@ using enum OneMotor::Motor::DJI::MotorMode;
 using OneMotor::Control::PID_Params;
 
 static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
-    .Kp = 5,
-    .Ki = 0,
+    .Kp = 1.5,
+    .Ki = 0.002,
     .Kd = 0,
     .MaxOutput = 3000,
-    .Deadband = 30,
-    .IntegralLimit = 500,
+    .Deadband = 100,
+    .IntegralLimit = 150,
+    .DerivativeFilterRC = 0.1,
+    .OutputFilterRC = 0.02,
 };
 static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
-    .Kp = 8,
+    .Kp = 2.0,
     .Ki = 0.2,
-    .Kd = 0.1,
-    .MaxOutput = 10000,
-    .Deadband = 30,
-    .IntegralLimit = 1000,
+    .Kd = 0.05,
+    .MaxOutput = 15000,
+    .Deadband = 100,
+    .IntegralLimit = 2000,
 };
 
 Xeno::Suck& Xeno::Suck::getInstance()
@@ -45,3 +47,4 @@ Xeno::Suck::Suck()
         throw std::runtime_error(e.message);
     });
 }
+

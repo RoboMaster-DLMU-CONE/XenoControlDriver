@@ -5,6 +5,7 @@
 #include "Lift.hpp"
 #include "Shift.hpp"
 #include "Stretch.hpp"
+#include "Suck.hpp"
 
 void clearInputBuffer()
 {
@@ -16,6 +17,8 @@ int main()
 {
     float lift{};
     float stretch{};
+    float shift{};
+    float suck{};
     float r1{};
     float r2{};
     float r3{};
@@ -23,6 +26,8 @@ int main()
     std::unordered_map<std::string, float*> commandMap;
     commandMap["lift"] = &lift;
     commandMap["stretch"] = &stretch;
+    commandMap["shift"] = &shift;
+    commandMap["suck"] = &suck;
     commandMap["r1"] = &r1;
     commandMap["r2"] = &r2;
     commandMap["r3"] = &r3;
@@ -66,13 +71,15 @@ int main()
         std::cout << "\nCurrent state:\n";
         std::cout << "  lift: " << lift << "\n";
         std::cout << "  stretch: " << stretch << "\n";
-        // std::cout << "  shift: " << packet.shift << "\n";
-        // std::cout << "  suck_rotate: " << packet.suck_rotate << "\n";
+        std::cout << "  shift: " << shift << "\n";
+        std::cout << "  suck_rotate: " << suck << "\n";
         std::cout << "  r1: " << r1 << "\n";
         std::cout << "  r2: " << r2 << "\n";
         std::cout << "  r3: " << r3 << "\n";
         Xeno::Lift::getInstance().posAngControl(lift, 80);
-        Xeno::Stretch::getInstance().posAngControl(stretch, 80);
+        // Xeno::Stretch::getInstance().posAngControl(stretch, 80);
+        Xeno::Shift::getInstance().posAngControl(shift, 50);
+        Xeno::Suck::getInstance().posAngControl(suck, 50);
         // auto _ = Xeno::Arm::getInstance().posVelControl(1, r1, 2);
         // _ = Xeno::Arm::getInstance().posVelControl(2, r2, 2);
         // _ = Xeno::Arm::getInstance().posVelControl(3, r3, 2);

@@ -9,8 +9,6 @@ using OneMotor::Motor::DJI::M3508;
 using enum OneMotor::Motor::DJI::MotorMode;
 using OneMotor::Control::PID_Params;
 
-using std::chrono_literals::operator ""ms;
-
 static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
     .Kp = 2.2,
     .Ki = 0.008,
@@ -52,10 +50,12 @@ Xeno::Lift::Lift()
     m3508_1 = std::make_unique<M3508<3, Position>>(driver, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
     m3508_2 = std::make_unique<M3508<4, Position>>(driver, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
     (void)m3508_1->enable()
-           .and_then([this] { return m3508_2->enable(); })
-           .or_else([](const auto& e) -> tl::expected<void, OneMotor::Error>
-           {
-               throw std::runtime_error(e.message);
-           });
+                 .and_then([this] { return m3508_2->enable(); })
+                 .or_else([](const auto& e) -> tl::expected<void, OneMotor::Error>
+                 {
+                     throw std::runtime_error(e.message);
+                 });
 }
+
+
 

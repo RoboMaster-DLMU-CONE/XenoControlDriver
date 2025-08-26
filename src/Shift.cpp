@@ -8,7 +8,7 @@ using enum OneMotor::Motor::DJI::MotorMode;
 using OneMotor::Control::PID_Params;
 
 static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
-    .Kp = 2.0,
+    .Kp = 1.5,
     .Ki = 0.005,
     .Kd = 0,
     .MaxOutput = 10000,
@@ -18,10 +18,10 @@ static constexpr PID_Params<float> POS_DEFAULT_PARAMS{
 static constexpr PID_Params<float> ANG_DEFAULT_PARAMS{
     .Kp = 3,
     .Ki = 0.2,
-    .Kd = 0.1,
-    .MaxOutput = 10000,
-    .Deadband = 130,
-    .IntegralLimit = 1000,
+    .Kd = 0.05,
+    .MaxOutput = 15000,
+    .Deadband = 200,
+    .IntegralLimit = 2000,
 };
 
 
@@ -46,3 +46,4 @@ Xeno::Shift::Shift()
         throw std::runtime_error(e.message);
     });
 }
+

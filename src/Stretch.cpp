@@ -50,9 +50,11 @@ Xeno::Stretch::Stretch()
     m3508_1 = std::make_unique<M3508<1, Position>>(driver, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
     m3508_2 = std::make_unique<M3508<2, Position>>(driver, POS_DEFAULT_PARAMS, ANG_DEFAULT_PARAMS);
     (void)m3508_1->enable()
-           .and_then([this] { return m3508_2->enable(); })
-           .or_else([](const auto& e) -> tl::expected<void, OneMotor::Error>
-           {
-               throw std::runtime_error(e.message);
-           });
+                 .and_then([this] { return m3508_2->enable(); })
+                 .or_else([](const auto& e) -> tl::expected<void, OneMotor::Error>
+                 {
+                     throw std::runtime_error(e.message);
+                 });
 }
+
+

@@ -14,6 +14,7 @@ namespace Xeno
         [[nodiscard]] OneMotor::Can::CanDriver& getArmDriver() const;
         CanDriverManager(CanDriverManager&) = delete;
         CanDriverManager& operator=(const CanDriverManager&) = delete;
+
     private:
         CanDriverManager();
         std::unique_ptr<OneMotor::Can::CanDriver> base_driver;
